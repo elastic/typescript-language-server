@@ -5,30 +5,15 @@
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { clearTimeout } from "timers";
-
 export class Deferred<T> {
-
-    private timer: any
-
-    constructor(private operation: string, timeout?: number) {
-        this.timer = setTimeout(() => {
-            this.reject(new Error(this.operation + " timeout"));
-        }, timeout || 20000)
-    }
+    constructor(private operation: string, timeout?: number) {}
 
     resolve: (value?: T) => void;
     reject: (err?: any) => void;
 
     promise = new Promise<T>((resolve, reject) => {
-        this.resolve = obj => {
-            clearTimeout(this.timer);
-            resolve(obj);
-        }
-        this.reject = obj => {
-            clearTimeout(this.timer);
-            reject(obj);
-        }
+        this.resolve = resolve;
+        this.reject = reject;
     });
 }
 
