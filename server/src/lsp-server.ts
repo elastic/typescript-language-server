@@ -45,6 +45,7 @@ export interface IServerOptions {
     tsserverLogFile?: string;
     tsserverLogVerbosity?: string;
     lspClient: LspClient;
+    otherOptions?: Map<string, string>;
 }
 
 export class LspServer {
@@ -118,7 +119,8 @@ export class LspServer {
             globalPlugins,
             pluginProbeLocations,
             logger: this.options.logger,
-            onEvent: this.onTsEvent.bind(this)
+            onEvent: this.onTsEvent.bind(this),
+            otherOptions: this.options.otherOptions
         });
 
         this.tspClient.start();

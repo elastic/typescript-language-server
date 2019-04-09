@@ -17,6 +17,7 @@ export interface IServerOptions {
     tsserverLogFile?: string;
     tsserverLogVerbosity?: string;
     showMessageLevel: lsp.MessageType
+    otherOptions?: Map<string, string>;
 }
 
 export function createLspConnection(options: IServerOptions): lsp.IConnection {
@@ -28,7 +29,8 @@ export function createLspConnection(options: IServerOptions): lsp.IConnection {
         lspClient,
         tsserverPath: options.tsserverPath,
         tsserverLogFile: options.tsserverLogFile,
-        tsserverLogVerbosity: options.tsserverLogVerbosity
+        tsserverLogVerbosity: options.tsserverLogVerbosity,
+        otherOptions: options.otherOptions
     });
 
     connection.onInitialize(server.initialize.bind(server));

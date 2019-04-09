@@ -26,6 +26,7 @@ export interface TspClientOptions {
     globalPlugins?: string[];
     pluginProbeLocations?: string[]
     onEvent?: (event: protocol.Event) => void;
+    otherOptions?: Map<string, string>;
 }
 
 interface TypeScriptRequestTypes {
@@ -99,6 +100,12 @@ export class TspClient {
         if (pluginProbeLocations && pluginProbeLocations.length) {
             args.push('--pluginProbeLocations', pluginProbeLocations.join(','));
         }
+        if (this.options.otherOptions) {
+            for (const key of this.options.otherOptions.keys()) {
+                args.push(key, this.options.otherOptions[key])
+            }
+        }
+
         this.cancellationPipeName = tempy.file({ name: 'tscancellation' } as any);
         args.push('--cancellationPipeName', this.cancellationPipeName + '*');
         this.logger.info(`Starting tsserver : '${tsserverPath} ${args.join(' ')}'`);
