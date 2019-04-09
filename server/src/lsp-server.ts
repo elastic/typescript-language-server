@@ -50,13 +50,13 @@ export interface IServerOptions {
 
 export class LspServer {
 
-    private initializeParams: TypeScriptInitializeParams;
+    protected initializeParams: TypeScriptInitializeParams;
     private initializeResult: TypeScriptInitializeResult;
-    private tspClient: TspClient;
+    protected tspClient: TspClient;
     private diagnosticQueue: DiagnosticEventQueue;
-    private logger: Logger;
+    protected logger: Logger;
 
-    private readonly documents = new LspDocuments();
+    protected readonly documents = new LspDocuments();
 
     constructor(private options: IServerOptions) {
         this.logger = new PrefixingLogger(options.logger, '[lspserver]')
@@ -768,7 +768,7 @@ export class LspServer {
         return result;
     }
 
-    private rootPath(): string {
+    protected rootPath(): string {
         return this.initializeParams.rootUri ? uriToPath(this.initializeParams.rootUri)! : this.initializeParams.rootPath!;
     }
 
