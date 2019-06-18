@@ -102,7 +102,7 @@ export class TspClient {
         }
         if (this.options.otherOptions) {
             for (const key of this.options.otherOptions.keys()) {
-                args.push(key, this.options.otherOptions[key])
+                args.push(key, this.options.otherOptions.get(key)!)
             }
         }
 
